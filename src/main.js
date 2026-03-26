@@ -12,9 +12,15 @@ import { createSnows } from "./snowFlow.js";
 import { createGroundRing } from "./groundRing.js";
 import { createUIText } from "./text.js";
 
-const ALLOWED_HOSTS = [".github.io", "localhost", "127.0.0.1"];
+const ALLOWED_HOST_SUFFIX = [".github.io", ".vercel.app"];
+const ALLOWED_HOST_EXACT = ["localhost", "127.0.0.1"];
 
-if (!ALLOWED_HOSTS.includes(window.location.hostname)) {
+const host = window.location.hostname;
+const isAllowedHost =
+  ALLOWED_HOST_EXACT.includes(host) ||
+  ALLOWED_HOST_SUFFIX.some((suffix) => host.endsWith(suffix));
+
+if (!isAllowedHost) {
   const el = document.createElement("div");
   el.id = "unauth";
   el.innerHTML = "<div><h2>Unauthorized</h2><p>This demo is private.</p></div>";
@@ -45,7 +51,7 @@ if (!ALLOWED_HOSTS.includes(window.location.hostname)) {
     55,
     window.innerWidth / window.innerHeight,
     0.1,
-    1000
+    1000,
   );
   camera.position.set(5, 13, 17);
   camera.layers.enable(1);
@@ -71,7 +77,7 @@ if (!ALLOWED_HOSTS.includes(window.location.hostname)) {
     new THREE.Vector2(window.innerWidth, window.innerHeight),
     2.2,
     0.6,
-    0.65
+    0.65,
   );
   //强度 半径 阈值
   bloomPass.strength = 1.5;
