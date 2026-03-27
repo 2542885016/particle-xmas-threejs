@@ -32,3 +32,18 @@ git clone https://github.com/2542885016/-
 cd particle-xmas
 npm install
 npm run dev
+
+
+## 🧠 Troubleshooting & Lessons Learned
+
+在本项目开发与部署过程中，主要解决了以下工程问题：
+
+- **Three.js 交互控制**：修复 OrbitControls 缩放失效问题，优化相机参数以改善视图比例  
+- **场景层级与坐标系统**：解决光源与模型错位（world / local 坐标），以及 Sprite 文本错误绑定问题  
+- **资源加载与构建差异**：修复生产环境资源 404（Vite 构建后 `/src` 路径失效），统一使用 `public/` 或模块导入   
+
+### 📌 Key Takeaways
+- Scene Graph（对象层级）是 Three.js 问题排查核心  
+- 区分 world / local coordinate 可避免大多数位置错误  
+- 开发环境与生产环境资源路径存在差异  
+- 优先通过 console 报错定位问题，再做最小修改
