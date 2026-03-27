@@ -2,7 +2,7 @@
 import * as THREE from "three";
 
 //new: 加载圆形纹理
-const starTexture = new THREE.TextureLoader().load("src/circle-64.ico");
+const starTexture = new THREE.TextureLoader().load("circle-64.ico");
 
 export function createStars() {
   //创建 Group 容器

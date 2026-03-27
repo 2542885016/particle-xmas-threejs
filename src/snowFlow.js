@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-const snowTexture = new THREE.TextureLoader().load("src/circle-64.ico");
+const snowTexture = new THREE.TextureLoader().load("circle-64.ico");
 
 export function createSnows() {
   //basic setting
