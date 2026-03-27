@@ -33,14 +33,12 @@ if (!isAllowedHost) {
   renderer.setPixelRatio(window.devicePixelRatio || 1);
   renderer.setSize(window.innerWidth, window.innerHeight);
 
-  canvas.style.width = `${window.innerWidth}px`;
-  canvas.style.height = `${window.innerHeight}px`;
-
-  // 设置内部渲染分辨率
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  // 同步 canvas HTML 元素尺寸，防止白边
-  canvas.style.width = `${window.innerWidth}px`;
-  canvas.style.height = `${window.innerHeight}px`;
+  // 画布大小由 CSS 控制，避免 px 计算误差
+  canvas.style.width = "100%";
+  canvas.style.height = "100%";
+  canvas.style.display = "block";
+  canvas.style.margin = "0";
+  canvas.style.padding = "0";
 
   //
   const scene = new THREE.Scene();
@@ -158,12 +156,14 @@ if (!isAllowedHost) {
   animate();
 
   window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    composer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(width, height);
+    composer.setSize(width, height);
 
-    canvas.style.width = `${window.innerWidth}px`;
-    canvas.style.height = `${window.innerHeight}px`;
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
   });
 }
