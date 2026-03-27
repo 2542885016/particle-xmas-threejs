@@ -51,13 +51,14 @@ if (!isAllowedHost) {
     0.1,
     1000,
   );
-  camera.position.set(5, 13, 17);
+  camera.position.set(5, 13, 20); // 后退相机，让树显示更小
   camera.layers.enable(1);
 
   //
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = false; //画面伸缩
-  controls.minDistance = controls.maxDistance = camera.position.length();
+  controls.minDistance = 5; // 允许最小距离
+  controls.maxDistance = 50; // 允许最大距离
 
   controls.minPolarAngle = Math.PI * 0.1;
   controls.maxPolarAngle = Math.PI * 0.48;
@@ -93,20 +94,26 @@ if (!isAllowedHost) {
   scene.add(dir);
 
   //!!
-  const treeParticles = createTreeParticles();
-  console.log(treeParticles);
-  scene.add(treeParticles.points);
-  treeParticles.points.position.y -= 2;
-  treeParticles.points.position.z -= 1;
+  const treeParticles = createTreeParticles({ HEIGHT: 13.5 });
+  const heart = createHeartParticle({ TREE_HEIGHT: 13.5, RADIUS: 0.6 });
+
+  console.log(treeParticles, heart);
+
+  const treeGroup = new THREE.Group();
+  treeGroup.add(treeParticles.points);
+  treeGroup.add(heart);
+
+  // 让树和光源一起移动，并保持光源在树顶中心（tree 顶部大约 13.5）
+  treeGroup.position.set(0, -2, -1);
+
+  // 确保 heart 在树顶中心（相对 treeGroup）
+  heart.position.set(0, 0, 0);
+
+  scene.add(treeGroup);
 
   const stars = createStars();
   console.log(stars);
   scene.add(stars);
-
-  const heart = createHeartParticle();
-  console.log(heart);
-  scene.add(heart);
-  heart.position.x += 0.3;
 
   const snow = createSnows();
   console.log(snow);
