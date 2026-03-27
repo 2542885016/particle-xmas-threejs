@@ -23,16 +23,6 @@
 
 ---
 
-## 本地运行
-
-克隆项目并安装依赖后启动开发服务器：
-
-```bash
-git clone https://github.com/2542885016/-
-cd particle-xmas
-npm install
-npm run dev
-
 
 ## 🧠 Troubleshooting & Lessons Learned
 
@@ -47,3 +37,18 @@ npm run dev
 - 区分 world / local coordinate 可避免大多数位置错误  
 - 开发环境与生产环境资源路径存在差异  
 - 优先通过 console 报错定位问题，再做最小修改
+
+
+---
+
+
+## 本地运行
+
+克隆项目并安装依赖后启动开发服务器：
+
+```bash
+git clone https://github.com/2542885016/-
+cd particle-xmas
+npm install
+npm run dev
+
