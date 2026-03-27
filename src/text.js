@@ -4,23 +4,40 @@ import * as THREE from "three";
 export function createUIText() {
   if (typeof window === "undefined") return null;
 
+  const text = "Merry Christmas";
+  const fontSize = 270;
+  const fontFamily = "'Brush Script MT', 'Playfair Display', cursive";
+  const font = `${fontSize}px ${fontFamily}`;
+
+  const padding = 40; // 额外留白，避免裁剪
+  const dpr = window.devicePixelRatio || 1;
+
+  const tempCanvas = document.createElement("canvas");
+  const tempCtx = tempCanvas.getContext("2d");
+  tempCtx.font = font;
+  const textMetrics = tempCtx.measureText(text);
+  const textWidth = Math.ceil(textMetrics.width);
+  const textHeight = Math.ceil(fontSize * 1.2);
+
   const canvas = document.createElement("canvas");
-  canvas.width = 1600;
-  canvas.height = 400;
+  canvas.width = Math.ceil((textWidth + padding * 2) * dpr);
+  canvas.height = Math.ceil((textHeight + padding * 2) * dpr);
+  canvas.style.width = `${textWidth + padding * 2}px`;
+  canvas.style.height = `${textHeight + padding * 2}px`;
 
   const ctx = canvas.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
   // ===== 背景透明 =====
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // ===== 字体（花体 + fallback）=====
-  ctx.font = "270px 'Brush Script MT', 'Playfair Display', cursive";
+  ctx.font = font;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
 
-  const text = "Merry Christmas";
-  const x = canvas.width / 2;
-  const y = canvas.height / 2 + 10;
+  const x = (textWidth + padding * 2) / 2;
+  const y = (textHeight + padding * 2) / 2;
 
   // ===== 渐变填充（高级感核心）=====
   const gradient = ctx.createLinearGradient(0, y - 60, 0, y + 60);
